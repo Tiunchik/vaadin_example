@@ -23,7 +23,6 @@ public class ChessPlayer {
 
     private String password;
 
-    @Column(nullable = false)
     private int elo;
 
     @ManyToOne

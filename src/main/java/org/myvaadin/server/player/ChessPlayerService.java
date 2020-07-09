@@ -1,10 +1,14 @@
 package org.myvaadin.server.player;
 
 import org.myvaadin.server.overallservices.Mapper;
+import org.myvaadin.server.school.ChessSchoolDTO;
+import org.myvaadin.server.school.ChessSchoolService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -13,11 +17,15 @@ public class ChessPlayerService {
 
     private PlayerRepository plrRep;
 
+    private ChessSchoolService schoolService;
+
     private Mapper map;
 
     public ChessPlayerService(@Autowired PlayerRepository plrRep,
+                              @Autowired ChessSchoolService schoolService,
                               @Autowired Mapper map) {
         this.plrRep = plrRep;
+        this.schoolService = schoolService;
         this.map = map;
     }
 
@@ -41,6 +49,9 @@ public class ChessPlayerService {
     }
 
     public ChessPlayerDTO saveUpdatePlayer(ChessPlayerDTO plr) {
+        if (plr.getElo() == 0) {
+            plr.setElo(400);
+        }
         return map.convertToPlayerDTO(plrRep.save(map.convertToPlayer(plr)));
     }
 
@@ -63,6 +74,14 @@ public class ChessPlayerService {
 
     public int count(int id){
         return plrRep.count(id);
+    }
+
+    public Map<String,Integer> getHistogrammInfo(){
+        HashMap<String, Integer> answer = new HashMap<>();
+        schoolService.getAllSchools().forEach(school -> {
+            answer.put(school.getCalled(), count(school.getId()));
+        });
+        return answer;
     }
 
 }

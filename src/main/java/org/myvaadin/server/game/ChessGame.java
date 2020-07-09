@@ -14,13 +14,13 @@ public class ChessGame {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "firstplayer_id",
             foreignKey = @ForeignKey(name = "FIRST_PLAYER_ID_FK")
     )
     private ChessPlayer firstPlayer;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "secondplayer_id",
             foreignKey = @ForeignKey(name = "SECOND_PLAYER_ID_FK")
     )

@@ -21,8 +21,6 @@ public class UIServiceInitLicener implements VaadinServiceInitListener {
     private void authenticateNavigation(BeforeEnterEvent event) {
         if (!LoginView.class.equals(event.getNavigationTarget())
                 && !Utils.isUserLoggedIn()) {
-
-
             event.rerouteTo(LoginView.class);
         }
     }

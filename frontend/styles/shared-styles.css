@@ -33,13 +33,13 @@ a[highlight] {
 
 }
 
-.list-view .contact-grid {
+.list-view .player-grid {
   flex: 2;
 
 
 }
 
-.list-view .contact-form {
+.list-view .player-form {
   flex: 1;
   padding: var(--lumo-space-m);
 
@@ -53,4 +53,9 @@ a[highlight] {
   .list-view.editing .contact-grid {
     display: none;
   }
+}
+
+.historgam-view .elo-stats {
+  font-size: 2em;
+  margin: 1em 0;
 }

@@ -1,5 +1,6 @@
 package org.myvaadin.ui.main.children;
 
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
@@ -33,28 +34,78 @@ public class PlayerViewList extends VerticalLayout {
         addClassName("list-view");
         setSizeFull();
         configureGrid();
+        configuredForm();
+        Button button = new Button();
+        button.setText("Add player");
+        add(button);
+        button.addClickListener(e -> {
+            ChessPlayerDTO dto = new ChessPlayerDTO();
+            dto.setId(0);
+            dto.setElo(400);
+            editContact(dto);
+        });
 
-        form = new PlayerForm(schoolService);
         Div content = new Div(grid, form);
         content.addClassName("content");
         content.setSizeFull();
 
         add(content);
         updateList();
+
     }
 
     private void configureGrid() {
-        grid.addClassName("contact-grid");
+        grid.addClassName("player-grid");
         grid.setSizeFull();
         grid.setColumns("name", "elo", "login");
         grid.addColumn(chessPlayerDTO -> chessPlayerDTO
                 .getSchool()
                 .getCalled())
                 .setHeader("School");
+        grid.asSingleSelect().addValueChangeListener(event ->
+                editContact(event.getValue()));
     }
 
     private void updateList() {
         grid.setItems(playerService.getAllPlayers());
     }
 
+    private void configuredForm() {
+        form = new PlayerForm(schoolService);
+        form.setVisible(false);
+        form.addListener(PlayerForm.SaveEvent.class, this::saveContact);
+        form.addListener(PlayerForm.DeleteEvent.class, this::deleteContact);
+        form.addListener(PlayerForm.CloseEvent.class, e -> closeEditor());
+    }
+
+
+    public void editContact(ChessPlayerDTO plr) {
+        if (plr == null) {
+            closeEditor();
+        } else {
+            form.setPlayer(plr);
+            form.checkRights(plr);
+            form.setVisible(true);
+            addClassName("editing");
+        }
+    }
+
+    private void closeEditor() {
+        form.setPlayer(null);
+        form.checkRights(null);
+        form.setVisible(false);
+        removeClassName("editing");
+    }
+
+    private void saveContact(PlayerForm.SaveEvent event) {
+        playerService.saveUpdatePlayer(event.getPlayer());
+        updateList();
+        closeEditor();
+    }
+
+    private void deleteContact(PlayerForm.DeleteEvent event) {
+        playerService.deletePlayer(event.getPlayer().getId());
+        updateList();
+        closeEditor();
+    }
 }

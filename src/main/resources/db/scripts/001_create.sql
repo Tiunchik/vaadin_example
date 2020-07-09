@@ -1,4 +1,5 @@
-create sequence hibernate_sequence start with 1 increment by 1;
+create sequence hibernate_sequence start with 100 increment by 1;
+
 create table game (
 id bigint not null,
 first_player_elo_changed integer not null,
@@ -11,7 +12,7 @@ primary key (id)
 
 create table player (
 id integer not null,
-elo integer not null,
+elo integer default 400,
 login varchar(255),
 name varchar(255) not null,
 password varchar(255) default 'password',
@@ -32,9 +33,9 @@ primary key (id),
 constraint uk_school unique (called)
 );
 
-alter table game add constraint FIRST_PLAYER_ID_FK foreign key (firstplayer_id) references player;
+alter table game add constraint FIRST_PLAYER_ID_FK foreign key (firstplayer_id) references player on delete cascade ;
 
-alter table game add constraint SECOND_PLAYER_ID_FK foreign key (secondplayer_id) references player;
+alter table game add constraint SECOND_PLAYER_ID_FK foreign key (secondplayer_id) references player on delete cascade ;
 
 alter table player add constraint SCHOOL_ID_FK foreign key (school_id) references school;
 

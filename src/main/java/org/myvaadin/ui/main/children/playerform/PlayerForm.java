@@ -21,6 +21,7 @@ import org.myvaadin.server.school.ChessSchoolDTO;
 import org.myvaadin.server.school.ChessSchoolService;
 import org.myvaadin.server.security.Roles;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.stream.Collectors;
 
 public class PlayerForm extends FormLayout {
@@ -52,7 +53,7 @@ public class PlayerForm extends FormLayout {
         school.setItemLabelGenerator(ChessSchoolDTO::getCalled);
         binder.bindInstanceFields(this);
 
-        addClassName("contact-form");
+        addClassName("player-form");
         add(name,
                 login,
                 password,
@@ -61,9 +62,18 @@ public class PlayerForm extends FormLayout {
                 createButtonsLayout());
     }
 
-    public void setContact(ChessPlayerDTO player) {
+    public void setPlayer(ChessPlayerDTO player) {
         this.player = player;
         binder.readBean(player);
+    }
+
+    public void checkRights(ChessPlayerDTO player) {
+        if (player != null) {
+            rights.setValue(new HashSet<>(player.getRoles()));
+        } else {
+            rights.setValue(new HashSet<>());
+        }
+
     }
 
     private HorizontalLayout createButtonsLayout() {
@@ -110,7 +120,6 @@ public class PlayerForm extends FormLayout {
         DeleteEvent(PlayerForm source, ChessPlayerDTO contact) {
             super(source, contact);
         }
-
     }
 
     public static class CloseEvent extends PlayerFormEvent {

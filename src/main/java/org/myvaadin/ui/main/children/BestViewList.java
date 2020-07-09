@@ -10,6 +10,8 @@ import org.myvaadin.server.player.ChessPlayerDTO;
 import org.myvaadin.server.player.ChessPlayerService;
 import org.myvaadin.ui.main.MainVew;
 
+import java.util.List;
+
 @Route(value = "top", layout = MainVew.class)
 @PageTitle("Top players list")
 public class BestViewList extends VerticalLayout {
@@ -42,8 +44,9 @@ public class BestViewList extends VerticalLayout {
     }
 
     private void updateList() {
-        bestFivePlayersInLastFiveMinutes.setItems(playerService
-                .getAllBestPlayersInLast5Minutes());
+        List<ChessPlayerDTO> playerList = playerService.getAllBestPlayersInLast5Minutes();
+        playerList.sort((x,y) -> y.getElo() - x.getElo());
+        bestFivePlayersInLastFiveMinutes.setItems(playerList);
     }
 
 }

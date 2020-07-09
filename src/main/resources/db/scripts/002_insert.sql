@@ -25,6 +25,9 @@ VALUES (1, 'Lavender Brown', 1, 'Brown', 400),
        (19, 'Pansy Parkinson', 4, 'Parkinson', 400),
        (20, 'Daphne Greengrass', 4, 'Greengrass', 400);
 
+insert into PLAYER (ID, ELO, LOGIN, NAME, PASSWORD, SCHOOL_ID)
+values (21, 1200, 'admin', 'Ronald Bilius Weasley', 'admin', 1);
+
 insert into player_roles (player_id, roles)
 values (1, 'ROLE_VIEWUSERS'),
        (2, 'ROLE_VIEWUSERS'),
@@ -45,4 +48,5 @@ values (1, 'ROLE_VIEWUSERS'),
        (17, 'ROLE_VIEWUSERS'),
        (18, 'ROLE_VIEWUSERS'),
        (19, 'ROLE_VIEWUSERS'),
-       (20, 'ROLE_VIEWUSERS');
+       (20, 'ROLE_VIEWUSERS'),
+       (21, 'ROLE_VIEWUSERS');

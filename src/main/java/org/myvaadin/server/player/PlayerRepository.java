@@ -39,7 +39,7 @@ public interface PlayerRepository extends JpaRepository<ChessPlayer, Integer> {
 
     ChessPlayer findByLoginAndPassword(String login, String pass);
 
-    @Query(value = "select count(*) from player where player.SCHOOL_ID = ?1",
+    @Query(value = "select sum(ELO) from player where player.SCHOOL_ID = ?1",
             nativeQuery = true)
     int count(int school_id);
 }

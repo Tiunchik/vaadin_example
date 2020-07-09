@@ -23,6 +23,7 @@ public class Mapper {
         dto.setName(plr.getName());
         dto.setElo(plr.getElo());
         dto.setLogin(plr.getLogin());
+        dto.setPassword(plr.getPassword());
         dto.setSchool(converToSchoolDTO(plr.getSchool()));
         dto.setRoles(plr.getRoles().stream()
                 .map(Enum::toString)
@@ -54,6 +55,7 @@ public class Mapper {
         plr.setElo(dto.getElo());
         plr.setSchool(convertToSchool(dto.getSchool()));
         plr.setLogin(dto.getLogin());
+        plr.setPassword(dto.getPassword());
         plr.setRoles(dto.getRoles()
                 .stream()
                 .map(Roles::valueOf)

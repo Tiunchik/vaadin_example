@@ -3,6 +3,7 @@ package org.myvaadin.server.player;
 
 import org.myvaadin.server.school.ChessSchoolDTO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ChessPlayerDTO {
@@ -15,9 +16,11 @@ public class ChessPlayerDTO {
 
     private ChessSchoolDTO school;
 
-    private List<String> roles;
+    private List<String> roles = new ArrayList();
 
     private String login;
+
+    private String password;
 
     public ChessPlayerDTO() {
     }
@@ -68,5 +71,13 @@ public class ChessPlayerDTO {
 
     public void setRoles(List<String> roles) {
         this.roles = roles;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
